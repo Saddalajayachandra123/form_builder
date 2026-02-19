@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Premium Form Builder Pro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-logo">✨</div>
+            <h1 class="splash-title">Form Builder Pro</h1>
+            <p class="splash-subtitle">Create Beautiful Forms in Minutes</p>
+            <div class="splash-loader"></div>
+        </div>
+    </div>
+
+    <div class="theme-toggle" id="themeToggle">
+        <span class="theme-icon">🌙</span>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">✨ Form Builder Pro</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary" id="manageFormsBtn">📁 My Forms</button>
+                <button class="btn btn-secondary" id="viewResponsesBtn">📊 Responses</button>
+                <button class="btn btn-secondary" id="themeCustomizeBtn">🎨 Theme</button>
+                <button class="btn btn-primary" id="saveFormBtn">💾 Save</button>
+                <button class="btn btn-success" id="exportJsonBtn">📤 Export</button>
+                <button class="btn btn-danger" id="clearFormBtn">🗑️ Clear</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="toolbox">
+            <h2 class="toolbox-title">🎨 Field Toolbox</h2>
+            <div class="field-buttons">
+                <button class="field-btn" data-type="text" title="Add text input field">📝 Text Input</button>
+                <button class="field-btn" data-type="textarea" title="Add textarea field">📄 Textarea</button>
+                <button class="field-btn" data-type="email" title="Add email field">📧 Email</button>
+                <button class="field-btn" data-type="number" title="Add number field">🔢 Number</button>
+                <button class="field-btn" data-type="password" title="Add password field">🔒 Password</button>
+                <button class="field-btn" data-type="dropdown" title="Add dropdown field">📋 Dropdown</button>
+                <button class="field-btn" data-type="radio" title="Add radio buttons">⭕ Radio</button>
+                <button class="field-btn" data-type="checkbox" title="Add checkboxes">☑️ Checkbox</button>
+                <button class="field-btn" data-type="date" title="Add date picker">📅 Date</button>
+                <button class="field-btn" data-type="file" title="Add file upload">📎 File Upload</button>
+                <button class="field-btn" data-type="rating" title="Add star rating">⭐ Rating</button>
+                <button class="field-btn" data-type="signature" title="Add signature pad">✍️ Signature</button>
+            </div>
+        </aside>
+
+        <main class="canvas">
+            <div class="form-header">
+                <input type="text" id="formTitle" class="form-title-input" placeholder="Enter Form Title..." value="Untitled Form">
+                <div class="mode-toggle">
+                    <button class="mode-btn active" data-mode="edit">✏️ Edit</button>
+                    <button class="mode-btn" data-mode="preview">👁️ Preview</button>
+                </div>
+            </div>
+
+            <div class="form-description-wrapper">
+                <textarea id="formDescription" class="form-description-input" placeholder="Add form description (optional)..." rows="2"></textarea>
+            </div>
+
+            <div class="canvas-content" id="editMode">
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">📋</div>
+                    <h3>Start Building Your Form</h3>
+                    <p>Click on any field type from the toolbox to add it to your form</p>
+                </div>
+                <div class="form-fields" id="formFields"></div>
+                <div class="submit-customization">
+                    <label>Submit Button Text:</label>
+                    <input type="text" id="submitBtnText" value="Submit Form" placeholder="Submit Button Text">
+                </div>
+            </div>
+
+            <div class="canvas-content hidden" id="previewMode">
+                <div class="preview-container" id="previewContainer"></div>
+            </div>
+        </main>
+
+        <aside class="properties-panel" id="propertiesPanel">
+            <h2 class="properties-title">⚙️ Properties</h2>
+            <div class="properties-content" id="propertiesContent">
+                <div class="no-selection">
+                    <p>Select a field to edit its properties</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="modal hidden" id="fieldModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚙️ Field Settings</h3>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Label:</label>
+                    <input type="text" id="fieldLabel" placeholder="Field Label">
+                </div>
+                <div class="form-group" id="placeholderGroup">
+                    <label>Placeholder:</label>
+                    <input type="text" id="fieldPlaceholder" placeholder="Placeholder Text">
+                </div>
+                <div class="form-group">
+                    <label>Helper Text:</label>
+                    <input type="text" id="fieldHelper" placeholder="Additional help text">
+                </div>
+                <div class="form-group">
+                    <label>Default Value:</label>
+                    <input type="text" id="fieldDefault" placeholder="Default value">
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="fieldRequired">
+                        <span>Required Field</span>
+                    </label>
+                </div>
+                <div class="form-group" id="optionsGroup" style="display:none;">
+                    <label>Options (comma-separated):</label>
+                    <input type="text" id="fieldOptions" placeholder="Option1, Option2, Option3">
+                </div>
+                <div class="form-group" id="validationGroup" style="display:none;">
+                    <label>Validation Pattern:</label>
+                    <input type="text" id="fieldValidation" placeholder="e.g., [0-9]{10} for 10 digits">
+                </div>
+                <div class="form-group" id="maxRatingGroup" style="display:none;">
+                    <label>Max Rating:</label>
+                    <input type="number" id="fieldMaxRating" value="5" min="3" max="10">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalCancel">Cancel</button>
+                <button class="btn btn-primary" id="modalSave">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="responsesModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>📊 Form Responses</h3>
+                <button class="modal-close" id="responsesClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="responses-controls">
+                    <input type="text" id="searchResponses" placeholder="🔍 Search responses..." class="search-input">
+                    <button class="btn btn-small btn-danger" onclick="clearResponses()">Clear All</button>
+                </div>
+                <div id="responsesTable"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="themeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🎨 Theme Customization</h3>
+                <button class="modal-close" id="themeModalClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Primary Color:</label>
+                    <input type="color" id="themePrimary" value="#667eea">
+                </div>
+                <div class="form-group">
+                    <label>Secondary Color:</label>
+                    <input type="color" id="themeSecondary" value="#764ba2">
+                </div>
+                <div class="form-group">
+                    <label>Accent Color:</label>
+                    <input type="color" id="themeAccent" value="#f5576c">
+                </div>
+                <div class="form-group">
+                    <label>Font Family:</label>
+                    <select id="themeFontFamily">
+                        <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI</option>
+                        <option value="'Arial', sans-serif">Arial</option>
+                        <option value="'Georgia', serif">Georgia</option>
+                        <option value="'Courier New', monospace">Courier New</option>
+                        <option value="'Comic Sans MS', cursive">Comic Sans</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Button Style:</label>
+                    <select id="themeButtonStyle">
+                        <option value="rounded">Rounded</option>
+                        <option value="square">Square</option>
+                        <option value="pill">Pill</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="resetTheme()">Reset</button>
+                <button class="btn btn-primary" id="themeModalSave">Apply Theme</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="formsModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>📁 My Forms</h3>
+                <button class="modal-close" id="formsModalClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="formsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="confirmModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>⚠️ Confirm Action</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="confirmCancel">Cancel</button>
+                <button class="btn btn-danger" id="confirmOk">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="successModal">
+        <div class="modal-content modal-small">
+            <div class="modal-body" style="text-align: center; padding: 40px;">
+                <div class="success-animation">✓</div>
+                <h3 style="margin: 20px 0 10px;">Success!</h3>
+                <p id="successMessage">Form submitted successfully!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast hidden" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
